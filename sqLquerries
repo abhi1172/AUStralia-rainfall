@@ -1,0 +1,51 @@
+create database australia_rainfall
+use australia_rainfall
+create table aus_rain
+(
+`Date` 	date,
+Location varchar(40),	
+MinTemp	varchar(40),
+MaxTemp	varchar(40),
+Rainfall varchar(40),
+Evaporation	varchar(40),
+Sunshine	varchar(40),
+WindGustDir	varchar(40),
+WindGustSpeed varchar(40),	
+WindDir9am	varchar(40),
+WindDir3pm	varchar(40),
+WindSpeed9am	varchar(40),
+WindSpeed3pm	varchar(40),
+Humidity9am	varchar(40),
+Humidity3pm	varchar(40),
+Pressure9am	varchar(40),
+Pressure3pm	varchar(40),
+Cloud9am	varchar(40),
+Cloud3pm varchar(40),
+Temp9am	varchar(40),
+Temp3pm	varchar(40),
+RainToday varchar(40),
+RainTomorrow varchar(40)
+);
+
+
+
+SET SESSION sql_mode = ''
+LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/weatherAUS.csv'
+INTO TABLE aus_rain
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+
+select * from aus_rain
+select avg(MinTemp) from aus_rain
+
+alter table aus_rain
+drop column Cloud3pm
+
+alter table aus_rain
+drop column Cloud9am
+
+select location,round(avg(Rainfall),2), round(avg(WindGustSpeed),2) from aus_rain
+group by location
+order by avg(Rainfall) desc
